@@ -10,7 +10,9 @@ awsResourcesRouter.get("/ip", async (_, res) => {
 });
 
 awsResourcesRouter.get("/status", async (req, res) => {
-  res.send("Hello Status");
+  const arn = helpers.getARN();
+  const status = helpers.getStatus(arn);
+  res.json({ status });
 });
 
 module.exports = awsResourcesRouter;

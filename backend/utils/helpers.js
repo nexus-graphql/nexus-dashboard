@@ -25,8 +25,17 @@ const getIP = (eni) => {
     .PublicIp;
 };
 
+const getStatus = (arn) => {
+  let buffer = execSync(
+    `aws ecs describe-tasks --cluster backend_cluster_example_app --tasks ${arn}`
+  );
+
+  return JSON.parse(buffer.toString()).tasks[0].lastStatus;
+};
+
 module.exports = {
   getARN,
   getENI,
   getIP,
+  getStatus,
 };
