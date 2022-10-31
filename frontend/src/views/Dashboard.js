@@ -7,8 +7,8 @@ export default function Dashboard() {
   return (
     <>
       <Sidebar />
-      <div className="relative md:ml-64 bg-blueGray-100">
-        <Navbar />
+      <div className="relative md:ml-64 bg-blueGray-100 h-screen">
+        <Navbar name="Deployment" />
         {/* Header */}
         <div className="relative bg-white-600 md:pt-32 pb-32 pt-12">
           <div className="px-4 md:px-10 mx-auto w-full">
