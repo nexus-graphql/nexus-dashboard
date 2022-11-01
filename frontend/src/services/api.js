@@ -10,4 +10,7 @@ export const getStatus = async () => {
   return response.data.status;
 };
 
-export const getData = async () => {};
+export const getData = async () => {
+  let response = await axios.get("http://localhost:3001/api/user/dataSources");
+  return response.data;
+};
