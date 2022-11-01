@@ -9,6 +9,7 @@ const getAuthorization = () => {
   return envJSON.ADMIN_SECRET;
 };
 
+// this has to be reafactored, but is working now
 const getDataSources = () => {
   const template = load(readFileSync(`${userDirectory}/.meshrc.yaml`, "utf8"));
   let resObj = {};
@@ -16,23 +17,26 @@ const getDataSources = () => {
     if (ele.handler.postgraphile) {
       let connectString = ele.handler.postgraphile.connectionString;
       if (!resObj.postgres) {
-        resObj.postgres = [connectString];
+        resObj.postgres = [{ name: ele.name, connectString }];
       } else {
-        resObj.postgres = [...resObj.postgres, connectString];
+        resObj.postgres = [
+          ...resObj.postgres,
+          { name: ele.name, connectString },
+        ];
       }
     } else if (ele.handler.graphql) {
       let connectString = ele.handler.graphql.endpoint;
       if (!resObj.graphql) {
-        resObj.graphql = [connectString];
+        resObj.graphql = [{ name: ele.name, connectString }];
       } else {
-        resObj.graphql = [...resObj.graphql, connectString];
+        resObj.graphql = [...resObj.graphql, { name: ele.name, connectString }];
       }
     } else if (ele.handler.openapi) {
       let connectString = ele.handler.openapi.source;
       if (!resObj.openapi) {
-        resObj.openapi = [connectString];
+        resObj.openapi = [{ name: ele.name, connectString }];
       } else {
-        resObj.openapi = [...resObj.openapi, connectString];
+        resObj.openapi = [...resObj.openapi, { name: ele.name, connectString }];
       }
     }
   });
