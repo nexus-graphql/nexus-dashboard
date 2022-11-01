@@ -5,6 +5,8 @@ userResourcesRouter.get("/authorization", (req, res) => {
   res.json({ authorization: userHelpers.getAuthorization() });
 });
 
-userResourcesRouter.get("/dataSources", (req, res) => {});
+userResourcesRouter.get("/dataSources", (req, res) => {
+  res.json(userHelpers.getDataSources());
+});
 
 module.exports = userResourcesRouter;
