@@ -1,17 +1,37 @@
 import React from "react";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-import DataCard from './DataCard';
-import AddSourceButton from './AddSourceButton';
+import DataCard from "./DataCard";
+import AddSourceButton from "./AddSourceButton";
+// import { useState, useEffect } from "react";
+// import { getData } from "../services/api.js";
 
 export default function DataSources() {
+  // const [data, setData] = useState([]);
+
+  // useEffect(() => {
+  //   getData().then((result) => {
+  //     setData(result);
+  //   });
+  // }, []);
+
   return (
     <>
       <Sidebar />
       <div className="relative md:ml-64 bg-blueGray-100 h-screen">
         <Navbar name="Data Sources" />
-        <DataCard name="Pet Store" type="Postgres" connection="Connection String" connectionDetails="postgres://postgres1234567" />
-        <DataCard name="Space" type="GraphQL" connection="Endpoint" connectionDetails="http://spacex.com/graphql" />
+        <DataCard
+          name="Pet Store"
+          type="Postgres"
+          connection="Connection String"
+          connectionDetails="postgres://postgres1234567"
+        />
+        <DataCard
+          name="Space"
+          type="GraphQL"
+          connection="Endpoint"
+          connectionDetails="http://spacex.com/graphql"
+        />
         <AddSourceButton />
       </div>
     </>

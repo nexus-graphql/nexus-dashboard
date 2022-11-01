@@ -17,6 +17,42 @@ export default function Dashboard() {
       setStatus(result);
     });
   }, []);
+
+  /*
+
+  three states:
+    checking
+      - status and ip will be an empty string while we're waiting to get back a status and ip
+
+    running
+    stopped
+
+  */
+
+  let statusObj;
+  if (status) {
+    // we know its either "RUNNING" or "STOPPED"
+    if (status === "RUNNING") {
+      statusObj = {
+        text: ["Active", "Deployment Successful"],
+        textClass: "text-emerald-500 mr-2",
+        icon: "fas fa-check",
+      };
+    } else if (status === "STOPPED") {
+      statusObj = {
+        text: ["Inactive", "Deployment Unsuccessful"],
+        textClass: "text-red-500 mr-2",
+        icon: "fas fa-angry",
+      };
+    }
+  } else {
+    statusObj = {
+      text: ["Checking..."],
+      textClass: "text-gray-500 mr-2",
+      icon: "fas fa-clock",
+    };
+  }
+
   return (
     <>
       <Sidebar />
@@ -44,26 +80,12 @@ export default function Dashboard() {
                         </div>
                       </div>
                       <p className="text-md text-blueGray-400 mt-4">
-                        <span
-                          className={
-                            status === "RUNNING"
-                              ? "text-emerald-500 mr-2"
-                              : "text-red-500 mr-2"
-                          }
-                        >
-                          <i
-                            className={
-                              status === "RUNNING"
-                                ? "fas fa-check"
-                                : "fas fa-angry"
-                            }
-                          ></i>
-                          {status === "RUNNING" ? "Active" : "Inactive"}
+                        <span className={statusObj.textClass}>
+                          <i className={statusObj.icon}></i>
+                          {statusObj.text[0]}
                         </span>
                         <span className="whitespace-nowrap">
-                          {status === "RUNNING"
-                            ? "Deployment Successful"
-                            : "Deployment Unsuccessful"}
+                          {statusObj.text[1]}
                         </span>
                       </p>
                     </div>

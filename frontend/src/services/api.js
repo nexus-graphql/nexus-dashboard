@@ -9,3 +9,5 @@ export const getStatus = async () => {
   let response = await axios.get("http://localhost:3001/api/aws/status");
   return response.data.status;
 };
+
+export const getData = async () => {};

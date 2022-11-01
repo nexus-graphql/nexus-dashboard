@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from '../logo.png';
+import logo from "../logo.png";
 
 import NotificationDropdown from "./NotificationDropdown.js";
 // import UserDropdown from "./UserDropdown.js";
@@ -11,7 +11,6 @@ export default function Sidebar() {
     <>
       <nav className="md:left-0 md:block bg-gray-800 md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
-
           {/* Brand */}
           <div class="flex items-center justify-center flex-wrap mt-8">
             <div class="w-1/2">
@@ -33,7 +32,8 @@ export default function Sidebar() {
                   className="text-white hover:text-pink-600 text-lg uppercase py-3 font-bold block"
                   to="/dashboard"
                 >
-                  <i className="fas fa-rocket text-white opacity-100 mr-2 text-sm"></i> Deployment
+                  <i className="fas fa-rocket text-white opacity-100 mr-2 text-sm"></i>{" "}
+                  Deployment
                 </Link>
               </li>
 
@@ -42,7 +42,8 @@ export default function Sidebar() {
                   className="text-white hover:text-pink-600 text-lg uppercase py-3 font-bold block"
                   to="/data-sources"
                 >
-                  <i className="fas fa-newspaper text-white mr-2 text-sm"></i> Data Sources
+                  <i className="fas fa-newspaper text-white mr-2 text-sm"></i>{" "}
+                  Data Sources
                 </Link>
               </li>
 
@@ -51,7 +52,8 @@ export default function Sidebar() {
                   className="text-white hover:text-pink-600 text-lg uppercase py-3 font-bold block"
                   to="/graphiql"
                 >
-                  <i className="fas fa-book text-white opacity-100 mr-2 text-sm"></i> GraphiQL
+                  <i className="fas fa-book text-white opacity-100 mr-2 text-sm"></i>{" "}
+                  GraphiQL
                 </Link>
               </li>
             </ul>
