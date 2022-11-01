@@ -1,9 +1,22 @@
 import React from "react";
-
-import Navbar from "components/Navbar.js";
-import Sidebar from "components/Sidebar.js";
+import Navbar from "./components/Navbar.js";
+import Sidebar from "./components/Sidebar.js";
+import { useState, useEffect } from "react";
+import { getIP, getStatus } from "./services/api.js";
 
 export default function Dashboard() {
+  // we need two functions, one to get deployment status, one for the ip
+  const [ip, setIp] = useState("");
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    getIP().then((result) => {
+      setIp(result);
+    });
+    getStatus().then((result) => {
+      setStatus(result);
+    });
+  }, []);
   return (
     <>
       <Sidebar />
@@ -13,7 +26,6 @@ export default function Dashboard() {
         <div className="relative bg-white-600 md:pt-32 pb-32 pt-12">
           <div className="px-4 md:px-10 mx-auto w-full">
             <div>
-
               {/* Card stats */}
               <div className="flex justify-center flex-wrap">
                 <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
@@ -32,11 +44,26 @@ export default function Dashboard() {
                         </div>
                       </div>
                       <p className="text-md text-blueGray-400 mt-4">
-                        <span className="text-emerald-500 mr-2">
-                          <i className="fas fa-check"></i> Active
+                        <span
+                          className={
+                            status === "RUNNING"
+                              ? "text-emerald-500 mr-2"
+                              : "text-red-500 mr-2"
+                          }
+                        >
+                          <i
+                            className={
+                              status === "RUNNING"
+                                ? "fas fa-check"
+                                : "fas fa-angry"
+                            }
+                          ></i>
+                          {status === "RUNNING" ? "Active" : "Inactive"}
                         </span>
                         <span className="whitespace-nowrap">
-                          Deployment Successful
+                          {status === "RUNNING"
+                            ? "Deployment Successful"
+                            : "Deployment Unsuccessful"}
                         </span>
                       </p>
                     </div>
@@ -62,7 +89,7 @@ export default function Dashboard() {
                           <i className="fas fa"></i> IP:
                         </span>
                         <span className="whitespace-nowrap">
-                          32.51.58.1293
+                          {ip ? `${ip}:4000/graphql` : "Endpoint Unavailable"}
                         </span>
                       </p>
                     </div>
