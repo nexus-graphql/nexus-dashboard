@@ -1,17 +1,17 @@
 const awsResourcesRouter = require("express").Router();
-const helpers = require("../utils/helpers");
+const awsHelpers = require("../utils/aws");
 
-awsResourcesRouter.get("/ip", async (_, res) => {
-  const arn = helpers.getARN();
-  const eni = helpers.getENI(arn);
-  const ip = helpers.getIP(eni);
+awsResourcesRouter.get("/ip", (_, res) => {
+  const arn = awsHelpers.getARN();
+  const eni = awsHelpers.getENI(arn);
+  const ip = awsHelpers.getIP(eni);
 
   res.json({ ip });
 });
 
-awsResourcesRouter.get("/status", async (req, res) => {
-  const arn = helpers.getARN();
-  const status = helpers.getStatus(arn);
+awsResourcesRouter.get("/status", (req, res) => {
+  const arn = awsHelpers.getARN();
+  const status = awsHelpers.getStatus(arn);
   res.json({ status });
 });
 
