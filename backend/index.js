@@ -1,14 +1,11 @@
-const express = require('express');
-const app = express();
-const PORT = 3001;
+#!/usr/bin/env node
 
-app.get('/', (request, response) => {
-  response.send('Nexus Backend')
-});
+const app = require("./app.js");
+const PORT = 3001;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-})
+});
 
 /*
 What data does frontend need from backend?
