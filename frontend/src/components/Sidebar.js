@@ -21,7 +21,7 @@ export default function Sidebar() {
           {/* Collapse */}
           <div
             className={
-              "md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded " +
+              "md:flex md:flex-col md:items-stretch md:opacity-100 md:relative m-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded " +
               collapseShow
             }
           >
@@ -29,27 +29,17 @@ export default function Sidebar() {
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li className="items-center">
                 <Link
-                  className="text-white hover:text-pink-600 text-lg uppercase py-3 font-bold block"
+                  className="text-white hover:text-white text-lg uppercase py-3 font-bold block"
                   to="/dashboard"
                 >
                   <i className="fas fa-rocket text-white opacity-100 mr-2 text-sm"></i>{" "}
-                  Deployment
+                  Dashboard
                 </Link>
               </li>
 
               <li className="items-center">
                 <Link
-                  className="text-white hover:text-pink-600 text-lg uppercase py-3 font-bold block"
-                  to="/data-sources"
-                >
-                  <i className="fas fa-newspaper text-white mr-2 text-sm"></i>{" "}
-                  Data Sources
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link
-                  className="text-white hover:text-pink-600 text-lg uppercase py-3 font-bold block"
+                  className="text-white hover:text-white text-lg uppercase py-3 font-bold block"
                   to="/graphiql"
                 >
                   <i className="fas fa-book text-white opacity-100 mr-2 text-sm"></i>{" "}

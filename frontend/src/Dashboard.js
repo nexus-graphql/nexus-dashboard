@@ -1,11 +1,11 @@
 import React from "react";
 import Navbar from "./components/Navbar.js";
 import Sidebar from "./components/Sidebar.js";
+import DataSources from "./components/DataSources.js";
 import { useState, useEffect } from "react";
 import { getIP, getStatus } from "./services/api.js";
 
 export default function Dashboard() {
-  // we need two functions, one to get deployment status, one for the ip
   const [ip, setIp] = useState("");
   const [status, setStatus] = useState("");
 
@@ -18,20 +18,8 @@ export default function Dashboard() {
     });
   }, []);
 
-  /*
-
-  three states:
-    checking
-      - status and ip will be an empty string while we're waiting to get back a status and ip
-
-    running
-    stopped
-
-  */
-
   let statusObj;
   if (status) {
-    // we know its either "RUNNING" or "STOPPED"
     if (status === "RUNNING") {
       statusObj = {
         text: ["Active", "Deployment Successful"],
@@ -56,7 +44,7 @@ export default function Dashboard() {
   return (
     <>
       <Sidebar />
-      <div className="relative md:ml-64 bg-blueGray-100 h-screen">
+      <div className="relative md:ml-64 bg-blueGray-100">
         <Navbar name="Deployment" />
         {/* Header */}
         <div className="relative bg-white-600 md:pt-32 pb-32 pt-12">
@@ -101,14 +89,14 @@ export default function Dashboard() {
                           </h5>
                         </div>
                         <div className="relative w-auto pl-4 flex-initial">
-                          <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-indigo-500">
+                          <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-green-500">
                             <i className="fas fa-chart-pie"></i>
                           </div>
                         </div>
                       </div>
                       <p className="text-sm text-blueGray-400 mt-4 text-lg">
-                        <span className="text-indigo-500 mr-2">
-                          <i className="fas fa"></i> IP:
+                        <span className="text-green-500 mr-2">
+                          <i className="fas fa"></i> Endpoint:
                         </span>
                         <span className="whitespace-nowrap">
                           {ip ? `${ip}:4000/graphql` : "Endpoint Unavailable"}
@@ -122,6 +110,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      <DataSources />
     </>
   );
 }
