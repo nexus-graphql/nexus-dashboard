@@ -16,7 +16,10 @@ const getENI = (arn) => {
   return JSON.parse(buffer.toString()).tasks[0].attachments[0].details[1].value;
 };
 
-const getIP = (eni) => {
+const getIP = () => {
+  const arn = getARN();
+  const eni = getENI(arn);
+
   let buffer = execSync(
     `aws ec2 describe-network-interfaces --network-interface-ids ${eni}`
   );
@@ -25,7 +28,9 @@ const getIP = (eni) => {
     .PublicIp;
 };
 
-const getStatus = (arn) => {
+const getStatus = () => {
+  const arn = getARN();
+
   let buffer = execSync(
     `aws ecs describe-tasks --cluster backend_cluster_example_app --tasks ${arn}`
   );
@@ -34,8 +39,6 @@ const getStatus = (arn) => {
 };
 
 module.exports = {
-  getARN,
-  getENI,
   getIP,
   getStatus,
 };
