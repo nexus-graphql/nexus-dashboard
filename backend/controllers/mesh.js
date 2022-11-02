@@ -8,11 +8,11 @@ const {
   updateDataSource,
 } = require("../utils/mesh");
 
-meshRouter.get("/authorization", (_, res) => {
+meshRouter.get("/auth", (_, res) => {
   res.status(200).json({ authorization: getAuthorization() });
 });
 
-meshRouter.post("/authorization", (_, res) => {
+meshRouter.post("/auth", (_, res) => {
   res.status(201).json({ authorization: resetAuthorization() });
 });
 
@@ -32,7 +32,7 @@ meshRouter.put("/datasources", (req, res) => {
 
 meshRouter.delete("/datasources", (req, res) => {
   deleteDataSource(req.body.name);
-  res.status(204).send();
+  res.status(201).json({ sources: getDataSources() });
 });
 
 module.exports = meshRouter;

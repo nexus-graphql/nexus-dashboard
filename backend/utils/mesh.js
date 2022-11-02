@@ -83,19 +83,13 @@ const getDataSources = () => {
     const newSource = { name: source.name };
     if (source.handler.postgraphile) {
       newSource.type = "postgres";
-      newSource.connection = {
-        connectionString: source.handler.postgraphile.connectionString,
-      };
+      newSource.connection = source.handler.postgraphile.connectionString;
     } else if (source.handler.graphql) {
       newSource.type = "graphql";
-      newSource.connection = {
-        endpoint: source.handler.graphql.endpoint,
-      };
+      newSource.connection = source.handler.graphql.endpoint;
     } else if (source.handler.openapi) {
       newSource.type = "rest";
-      newSource.connection = {
-        source: source.handler.openapi.source,
-      };
+      newSource.connection = source.handler.openapi.source;
     }
     return newSource;
   });

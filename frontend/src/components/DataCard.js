@@ -1,4 +1,19 @@
-const DataCard = ({ name, type, connection, connectionDetails }) => {
+const DataCard = ({
+  name,
+  type,
+  connection,
+  connectionDetails,
+  onRemoveSource,
+  onEditSource,
+}) => {
+  const handleRemoveSource = (e) => {
+    onRemoveSource({ name });
+  };
+
+  const handleEditSource = () => {
+    onEditSource({ type, name, connectionDetails });
+  };
+
   return (
     <>
       <div className="relative bg-white-600 md:pt-30 pb-10 pt-12">
@@ -16,7 +31,6 @@ const DataCard = ({ name, type, connection, connectionDetails }) => {
                   </div>
                 </div>
                 <div className="block w-full overflow-x-auto">
-
                   <table className="items-center w-full bg-transparent border-collapse">
                     <thead>
                       <tr>
@@ -29,6 +43,7 @@ const DataCard = ({ name, type, connection, connectionDetails }) => {
 
                         <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                           <button
+                            onClick={handleEditSource}
                             className="bg-green-500 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
                             type="button"
                             style={{ transition: "all .15s ease" }}
@@ -39,6 +54,7 @@ const DataCard = ({ name, type, connection, connectionDetails }) => {
 
                         <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                           <button
+                            onClick={handleRemoveSource}
                             className="bg-red-500 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
                             type="button"
                             style={{ transition: "all .15s ease" }}
@@ -65,9 +81,8 @@ const DataCard = ({ name, type, connection, connectionDetails }) => {
           </div>
         </div>
       </div>
-
     </>
-  )
-}
+  );
+};
 
-export default DataCard
+export default DataCard;
