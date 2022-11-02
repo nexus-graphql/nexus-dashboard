@@ -11,6 +11,6 @@ export const getStatus = async () => {
 };
 
 export const getData = async () => {
-  let response = await axios.get("http://localhost:3001/api/user/dataSources");
+  let response = await axios.get("http://localhost:3001/api/mesh/dataSources");
   return response.data;
 };

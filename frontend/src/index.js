@@ -10,7 +10,6 @@ ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path="/dashboard" component={Dashboard} />
-      {/* <Route path="/data-sources" component={DataSources} /> */}
       <Route path="/graphiql" component={Graphiql} />
       <Redirect from="/" to="/dashboard" />
     </Switch>

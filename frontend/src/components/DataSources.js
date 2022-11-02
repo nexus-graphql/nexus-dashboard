@@ -13,13 +13,9 @@ export default function DataSources() {
 
   useEffect(() => {
     getData().then((result) => {
-      setData(result);
+      setData(result.sources);
     });
   }, []);
-
-  let postgresSources = data.postgres;
-  let graphqlSources = data.graphql;
-  let openapiSources = data.openapi;
 
   const handleAddSource = () => {
     setIsButtonClicked(true);
@@ -29,24 +25,19 @@ export default function DataSources() {
     setIsButtonClicked(false);
   }
 
+  console.log(data);
+
+  // {sources: [{type, name, connection}, {}, {}]}
   return (
     <>
       <div className="relative md:ml-64 bg-blueGray-100 h-screen">
         <Navbar name="Data Sources" />
-        {postgresSources
-          ? postgresSources.map((source, idx) => {
-            return (
-              <DataCard
-                key={idx}
-                name={source.name}
-                type="Postgres"
-                connection="Connection String"
-                connectionDetails={source.connectString}
-              />
-            );
-          })
-          : null}
-        {graphqlSources
+        {/* {data.map((source, idx) => {
+          return (
+            <DataCard key={idx} name={source.name} type={source.type} connection={ } connectionDetails={source.connection.connectionString} />
+          )
+        })} */}
+        {/* {graphqlSources
           ? graphqlSources.map((source, idx) => {
             return (
               <DataCard
@@ -71,7 +62,7 @@ export default function DataSources() {
               />
             );
           })
-          : null}
+          : null} */}
 
         {isButtonClicked ? <AddSourceModal onModalClose={handleCloseModal} /> : null}
         <AddSourceButton onAddSource={handleAddSource} />
