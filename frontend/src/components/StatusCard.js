@@ -11,7 +11,7 @@ const StatusCard = ({ statusObj }) => {
                 </h5>
               </div>
               <div className="relative w-auto pl-4 flex-initial">
-                <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-green-500">
+                <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-indigo-500">
                   <i className="far fa-chart-bar"></i>
                 </div>
               </div>

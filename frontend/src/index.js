@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Dashboard from "./Dashboard.js";
-// import DataSources from "components/DataSources.js";
 import Graphiql from "components/Graphiql";
 
 ReactDOM.render(

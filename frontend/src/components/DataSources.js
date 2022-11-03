@@ -1,5 +1,4 @@
 import React from "react";
-// import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import DataCard from "./DataCard";
 import AddSourceModal from "./AddSourceModal.js";
@@ -39,7 +38,6 @@ export default function DataSources() {
   };
 
   const handleSaveChanges = async (dataSourceObj) => {
-    // post to API
     let response = await submitDataSource(dataSourceObj);
     setData(response.sources);
     handleCloseModal();
@@ -67,7 +65,6 @@ export default function DataSources() {
     graphql: "Endpoint",
   };
 
-  // {sources: [{type, name, connection}, {}, {}]}
   return (
     <>
       <div className="relative md:ml-64 bg-blueGray-100 h-screen">
