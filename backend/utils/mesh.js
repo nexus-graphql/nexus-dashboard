@@ -20,7 +20,7 @@ const resetAuthorization = () => {
 
   let envJSON = JSON.parse(readFileSync(envPath));
   envJSON.ADMIN_SECRET = adminSecret;
-  writeFileSync(path, JSON.stringify(envJSON), "utf8");
+  writeFileSync(envPath, JSON.stringify(envJSON), "utf8");
 
   return adminSecret;
 };

@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar.js";
 import Sidebar from "./components/Sidebar.js";
 import DataSources from "./components/DataSources.js";
 import { useState, useEffect } from "react";
-import { getIP, getStatus, getAuth } from "./services/api.js";
+import { getIP, getStatus, getAuth, resetAuth } from "./services/api.js";
 import StatusCard from "./components/StatusCard.js";
 import IpCard from "./components/IpCard.js";
 import AuthKeyCard from "components/AuthKeyCard.js";
@@ -14,16 +14,21 @@ export default function Dashboard() {
   const [auth, setAuth] = useState("");
 
   useEffect(() => {
+    getAuth().then((result) => {
+      setAuth(result);
+    });
     getIP().then((result) => {
       setIp(result);
     });
     getStatus().then((result) => {
       setStatus(result);
     });
-    getAuth().then((result) => {
-      setAuth(result);
-    });
   }, []);
+
+  const handleResetAdminSecret = async () => {
+    const newAuth = await resetAuth();
+    setAuth(newAuth);
+  };
 
   let statusObj;
   if (status) {
@@ -65,7 +70,10 @@ export default function Dashboard() {
               <div className="flex justify-center flex-wrap">
                 <StatusCard statusObj={statusObj} />
                 <IpCard ip={ip} />
-                <AuthKeyCard auth={auth} />
+                <AuthKeyCard
+                  auth={auth}
+                  onResetAdminSecret={handleResetAdminSecret}
+                />
               </div>
             </div>
           </div>

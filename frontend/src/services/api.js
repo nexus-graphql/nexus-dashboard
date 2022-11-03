@@ -29,6 +29,11 @@ export const getAuth = async () => {
   return response.data;
 };
 
+export const resetAuth = async () => {
+  let response = await axios.post("http://localhost:3001/api/mesh/auth");
+  return response.data;
+};
+
 export const submitDataSource = async (dataSourceObj) => {
   let response = await axios.post(
     "http://localhost:3001/api/mesh/datasources",
