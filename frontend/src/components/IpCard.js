@@ -11,17 +11,17 @@ const IpCard = ({ ip }) => {
                 </h5>
               </div>
               <div className="relative w-auto pl-4 flex-initial">
-                <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-green-500">
-                  <i className="fas fa-chart-pie"></i>
+                <div className="text-white p- text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-indigo-500">
+                  <i className="fas fa-chevron-right"></i>
                 </div>
               </div>
             </div>
             <p className="text-sm text-blueGray-400 mt-4 text-lg">
-              <span className="text-green-500 mr-2">
-                <i className="fas fa"></i> IP:
+              <span className="text-indigo-500 mr-2">
+                <i className="fas fa-chevron-right"></i> IP:
               </span>
               <span className="whitespace-nowrap">
-                {ip ? `${ip}:4000/graphql` : "Endpoint Unavailable"}
+                {ip ? `${ip}:4000/graphql` : "No Endpoint"}
               </span>
             </p>
           </div>

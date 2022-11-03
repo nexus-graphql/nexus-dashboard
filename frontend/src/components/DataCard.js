@@ -44,7 +44,7 @@ const DataCard = ({
                         <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                           <button
                             onClick={handleEditSource}
-                            className="bg-green-500 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
+                            className="bg-green-500 text-white active:bg-indigo-600 text-lg font-bold uppercase px-6 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
                             type="button"
                             style={{ transition: "all .15s ease" }}
                           >
@@ -55,7 +55,7 @@ const DataCard = ({
                         <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                           <button
                             onClick={handleRemoveSource}
-                            className="bg-red-500 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
+                            className="bg-pink-600 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
                             type="button"
                             style={{ transition: "all .15s ease" }}
                           >
