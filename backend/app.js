@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors");
+// const path = require("path");
 const awsRouter = require("./controllers/aws.js");
 const meshRouter = require("./controllers/mesh.js");
 const { graphiqlStart } = require("./utils/graphiql.js");
-
 const app = express();
 graphiqlStart();
 

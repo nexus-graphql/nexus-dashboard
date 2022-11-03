@@ -22,6 +22,12 @@ const AuthKeyCard = ({ auth, onResetAdminSecret }) => {
             <p className="text-sm text-blueGray-400 mt-4 text-sm">
               <span className="text-indigo-500 mr-2">Key:</span>
               <span className="whitespace-nowrap">{auth.authorization}</span>
+              <i
+                onClick={() => {
+                  navigator.clipboard.writeText(auth.authorization);
+                }}
+                className="fas fa-clipboard"
+              ></i>
             </p>
           </div>
         </div>
