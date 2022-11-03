@@ -10,6 +10,7 @@ graphiqlStart();
 app.use(express.json());
 app.use(cors());
 app.use(express.static("build"));
+// app.use(express.static(path.resolve(`${__dirname}/build`)));
 app.use("/api/aws", awsRouter);
 app.use("/api/mesh", meshRouter);
 
