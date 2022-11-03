@@ -9,7 +9,7 @@ const Graphiql = () => {
           title="GraphiQL"
           width="100%"
           height="100%"
-          src="http://localhost:4001/graphql"
+          src="http://localhost:4000/graphql"
         ></iframe>
       </div>
     </>

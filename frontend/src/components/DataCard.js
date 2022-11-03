@@ -30,7 +30,7 @@ const DataCard = ({
                     </div>
                   </div>
                 </div>
-                <div className="block w-full overflow-x-auto">
+                <div className="flex justify-center block w-full overflow-x-auto">
                   <table className="items-center w-full bg-transparent border-collapse">
                     <thead>
                       <tr>
@@ -40,28 +40,6 @@ const DataCard = ({
                         <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-lg uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                           {connection}
                         </th>
-
-                        <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                          <button
-                            onClick={handleEditSource}
-                            className="bg-green-500 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
-                            type="button"
-                            style={{ transition: "all .15s ease" }}
-                          >
-                            Edit
-                          </button>
-                        </div>
-
-                        <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                          <button
-                            onClick={handleRemoveSource}
-                            className="bg-red-500 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
-                            type="button"
-                            style={{ transition: "all .15s ease" }}
-                          >
-                            Remove
-                          </button>
-                        </div>
                       </tr>
                     </thead>
                     <tbody>
@@ -75,6 +53,27 @@ const DataCard = ({
                       </tr>
                     </tbody>
                   </table>
+                  <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                    <button
+                      onClick={handleEditSource}
+                      className="bg-green-500 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
+                      type="button"
+                      style={{ transition: "all .15s ease" }}
+                    >
+                      Edit
+                    </button>
+                    {/* </div> */}
+
+                    {/* <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right"> */}
+                    <button
+                      onClick={handleRemoveSource}
+                      className="bg-red-500 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
+                      type="button"
+                      style={{ transition: "all .15s ease" }}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

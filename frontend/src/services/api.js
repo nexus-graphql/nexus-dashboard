@@ -2,12 +2,21 @@ import axios from "axios";
 
 export const getIP = async () => {
   let response = await axios.get("http://localhost:3001/api/aws/ip");
-  return response.data.ip;
+  if (response.data.ip) {
+    return response.data.ip;
+  } else {
+    return "";
+  }
 };
 
 export const getStatus = async () => {
   let response = await axios.get("http://localhost:3001/api/aws/status");
-  return response.data.status;
+
+  if (response.data.status) {
+    return response.data.status;
+  } else {
+    return response.data.error;
+  }
 };
 
 export const getData = async () => {

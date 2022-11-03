@@ -1,5 +1,4 @@
 const AuthKeyCard = ({ auth }) => {
-  console.log(auth);
   return (
     <>
       <div className="w-full lg:w-6/12 xl:w-3/12 px-4">

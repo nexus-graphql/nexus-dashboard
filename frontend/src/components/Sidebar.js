@@ -2,18 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../logo.png";
 
-import NotificationDropdown from "./NotificationDropdown.js";
+// import NotificationDropdown from "./NotificationDropdown.js";
 // import UserDropdown from "./UserDropdown.js";
 
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
+
   return (
     <>
       <nav className="md:left-0 md:block bg-gray-800 md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           {/* Brand */}
-          <div class="flex items-center justify-center flex-wrap mt-8">
-            <div class="w-1/2">
+          <div className="flex items-center justify-center flex-wrap mt-8">
+            <div className="w-1/2">
               <img src={logo} className="App-logo" alt="logo" />
             </div>
           </div>

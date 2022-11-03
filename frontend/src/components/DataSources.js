@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "./Sidebar";
+// import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import DataCard from "./DataCard";
 import AddSourceModal from "./AddSourceModal.js";
@@ -64,7 +64,7 @@ export default function DataSources() {
   let connections = {
     postgres: "Connection String",
     rest: "Source",
-    graphql: "GraphQL",
+    graphql: "Endpoint",
   };
 
   // {sources: [{type, name, connection}, {}, {}]}

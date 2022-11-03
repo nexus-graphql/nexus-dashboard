@@ -4,7 +4,6 @@ const getARN = () => {
   let buffer = execSync(
     "aws ecs list-tasks --cluster backend_cluster_example_app"
   );
-
   return JSON.parse(buffer.toString()).taskArns[0];
 };
 
@@ -18,24 +17,30 @@ const getENI = (arn) => {
 
 const getIP = () => {
   const arn = getARN();
+  if (!arn) {
+    return { error: "No deployments" };
+  }
   const eni = getENI(arn);
 
   let buffer = execSync(
     `aws ec2 describe-network-interfaces --network-interface-ids ${eni}`
   );
 
-  return JSON.parse(buffer.toString()).NetworkInterfaces[0].Association
-    .PublicIp;
+  return {
+    ip: JSON.parse(buffer.toString()).NetworkInterfaces[0].Association.PublicIp,
+  };
 };
 
 const getStatus = () => {
   const arn = getARN();
-
+  if (!arn) {
+    return { error: "No deployments" };
+  }
   let buffer = execSync(
     `aws ecs describe-tasks --cluster backend_cluster_example_app --tasks ${arn}`
   );
 
-  return JSON.parse(buffer.toString()).tasks[0].lastStatus;
+  return { status: JSON.parse(buffer.toString()).tasks[0].lastStatus };
 };
 
 module.exports = {

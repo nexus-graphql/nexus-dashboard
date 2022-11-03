@@ -39,6 +39,12 @@ export default function Dashboard() {
         textClass: "text-red-500 mr-2",
         icon: "fas fa-angry",
       };
+    } else if (status === "No deployments") {
+      statusObj = {
+        text: ["Inactive", status],
+        textClass: "text-red-500 mr-2",
+        icon: "fas fa-angry",
+      };
     }
   } else {
     statusObj = {

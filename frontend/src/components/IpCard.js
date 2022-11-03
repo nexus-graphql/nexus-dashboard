@@ -21,7 +21,7 @@ const IpCard = ({ ip }) => {
                 <i className="fas fa"></i> IP:
               </span>
               <span className="whitespace-nowrap">
-                {ip ? `${ip}:4000/graphql` : "Endpoint Unavailable"}
+                {ip.ip ? `${ip.ip}:4000/graphql` : "Endpoint Unavailable"}
               </span>
             </p>
           </div>

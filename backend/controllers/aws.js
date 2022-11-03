@@ -2,11 +2,11 @@ const awsRouter = require("express").Router();
 const { getIP, getStatus } = require("../utils/aws");
 
 awsRouter.get("/ip", (_, res) => {
-  res.json({ ip: getIP() });
+  res.json(getIP());
 });
 
 awsRouter.get("/status", (_, res) => {
-  res.json({ status: getStatus() });
+  res.json(getStatus());
 });
 
 module.exports = awsRouter;
