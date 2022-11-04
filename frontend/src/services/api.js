@@ -11,11 +11,10 @@ export const getIP = async () => {
 
 export const getStatus = async () => {
   let response = await axios.get("http://localhost:3001/api/aws/status");
-
   if (response.data.status) {
     return response.data.status;
   } else {
-    return response.data.error;
+    return response.data.error || "No deployments";
   }
 };
 
@@ -26,11 +25,6 @@ export const getData = async () => {
 
 export const getAuth = async () => {
   let response = await axios.get("http://localhost:3001/api/mesh/auth");
-  return response.data;
-};
-
-export const resetAuth = async () => {
-  let response = await axios.post("http://localhost:3001/api/mesh/auth");
   return response.data;
 };
 

@@ -3,10 +3,11 @@ import Navbar from "./components/Navbar.js";
 import Sidebar from "./components/Sidebar.js";
 import DataSources from "./components/DataSources.js";
 import { useState, useEffect } from "react";
-import { getIP, getStatus, getAuth, resetAuth } from "./services/api.js";
+import { getIP, getStatus, getAuth } from "./services/api.js";
 import StatusCard from "./components/StatusCard.js";
 import IpCard from "./components/IpCard.js";
 import AuthKeyCard from "components/AuthKeyCard.js";
+import DeployButton from "components/DeployButton.js";
 
 export default function Dashboard() {
   const [ip, setIp] = useState("");
@@ -25,11 +26,6 @@ export default function Dashboard() {
     });
   }, []);
 
-  const handleResetAdminSecret = async () => {
-    const newAuth = await resetAuth();
-    setAuth(newAuth);
-  };
-
   let statusObj;
   if (status) {
     if (status === "RUNNING") {
@@ -46,7 +42,7 @@ export default function Dashboard() {
       };
     } else if (status === "No deployments") {
       statusObj = {
-        text: ["Inactive", status],
+        text: [" Inactive", status],
         textClass: "text-red-500 mr-2",
         icon: "fas fa-angry",
       };
@@ -72,9 +68,10 @@ export default function Dashboard() {
                 <IpCard ip={ip} />
                 <AuthKeyCard
                   auth={auth}
-                  onResetAdminSecret={handleResetAdminSecret}
                 />
               </div>
+
+              <DeployButton type="redeploy-disabled" />
             </div>
           </div>
         </div>
