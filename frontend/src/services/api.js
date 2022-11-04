@@ -51,3 +51,16 @@ export const submitEditDataSource = async (dataSourceObj) => {
   );
   return response.data;
 };
+
+export const getLocalChanges = async () => {
+  let response = await axios.get("http://localhost:3001/api/mesh/localchanges");
+  return response.data.localChanges; // returns {localChanges: false}
+};
+
+export const updateLocalChanges = async (localChanges) => {
+  let response = await axios.post(
+    "http://localhost:3001/api/mesh/localchanges",
+    { localChanges }
+  );
+  return response.data.localChanges;
+};

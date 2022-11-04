@@ -12,7 +12,7 @@ import {
   submitEditDataSource,
 } from "../services/api.js";
 
-export default function DataSources() {
+export default function DataSources({ onLocalChanges }) {
   const [data, setData] = useState([]);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [isEditClicked, setIsEditClicked] = useState(false);
@@ -40,17 +40,20 @@ export default function DataSources() {
   const handleSaveChanges = async (dataSourceObj) => {
     let response = await submitDataSource(dataSourceObj);
     setData(response.sources);
+    onLocalChanges(true);
     handleCloseModal();
   };
 
   const handleSaveEditSource = async (dataSourceObj) => {
     let response = await submitEditDataSource(dataSourceObj);
     setData(response.sources);
+    onLocalChanges(true);
     handleCloseEditModal();
   };
 
   const handleRemoveSource = async (nameObj) => {
     let response = await deleteDataSource(nameObj);
+    onLocalChanges(true);
     setData(response.sources);
   };
 
