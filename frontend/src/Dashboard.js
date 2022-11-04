@@ -47,12 +47,44 @@ export default function Dashboard() {
       return "redeploy-enabled";
     } else if (localChanges === false && status === "RUNNING") {
       return "redeploy-disabled";
+    } else if (status === "deploying") {
+      return "deploying";
+    } else if (status === "destroying") {
+      return "destroying";
     }
   };
 
   const handleLocalChanges = async (bool) => {
     await updateLocalChanges(bool);
     setLocalChanges(bool);
+  };
+
+  const handleDeploy = () => {
+    setStatus("deploying");
+    setTimeout(() => {
+      const interval = setInterval(async () => {
+        const response = await getStatus();
+        if (response.status === "RUNNING") {
+          clearInterval(interval);
+          setStatus(response.status);
+          setIp(await getIP());
+        }
+      }, 5000);
+    }, 5000);
+  };
+
+  const handleRedeploy = () => {
+    setStatus("deploying");
+    setTimeout(() => {
+      const interval = setInterval(async () => {
+        const response = await getStatus();
+        if (response.status === "RUNNING") {
+          clearInterval(interval);
+          setStatus(response.status);
+          setIp(await getIP());
+        }
+      }, 5000);
+    }, 5000);
   };
 
   let statusObj;
@@ -64,7 +96,6 @@ export default function Dashboard() {
         icon: "fas fa-check",
       };
     } else if (status === "STOPPED") {
-      // infrastructure on AWS still
       statusObj = {
         text: ["Inactive", " Deployment Unsuccessful"],
         textClass: "text-red-500 mr-2",
@@ -75,6 +106,18 @@ export default function Dashboard() {
         text: [" Inactive", status],
         textClass: "text-red-500 mr-2",
         icon: "fas fa-angry",
+      };
+    } else if (status === "deploying") {
+      statusObj = {
+        text: ["Deployment...", "in progress"],
+        textClass: "text-pink-500 mr-2",
+        icon: "fas fa-arrow-circle-up",
+      };
+    } else if (status === "destroying") {
+      statusObj = {
+        text: ["Destroying....", "in progress"],
+        textClass: "text-red-500 mr-2",
+        icon: "fas fa-trash-alt",
       };
     }
   } else {
@@ -93,6 +136,7 @@ export default function Dashboard() {
         <div className="relative bg-white-600 md:pt-32 pb-32 pt-12">
           <div className="px-4 md:px-10 mx-auto w-full">
             {localChanges ? <ChangeAlert /> : null}
+            {/* {status === "deploying" ? <DeploymentAlert /> : null} */}
             <div>
               <div className="flex justify-center flex-wrap">
                 <StatusCard statusObj={statusObj} />
@@ -100,7 +144,12 @@ export default function Dashboard() {
                 <AuthKeyCard auth={auth} />
               </div>
 
-              <DeployButton type={getButtonType()} />
+              <DeployButton
+                type={getButtonType()}
+                onLocalChanges={handleLocalChanges}
+                onDeploy={handleDeploy}
+                onRedeploy={handleRedeploy}
+              />
             </div>
           </div>
         </div>

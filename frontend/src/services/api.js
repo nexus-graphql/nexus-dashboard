@@ -64,3 +64,18 @@ export const updateLocalChanges = async (localChanges) => {
   );
   return response.data.localChanges;
 };
+
+export const deploy = async () => {
+  await axios.post("http://localhost:3001/api/deployment/deploy");
+  return;
+};
+
+export const redeploy = async () => {
+  await axios.post("http://localhost:3001/api/deployment/redeploy");
+  return;
+};
+
+export const destroy = async () => {
+  await axios.post("http://localhost:3001/api/deployment/destroy");
+  return;
+};

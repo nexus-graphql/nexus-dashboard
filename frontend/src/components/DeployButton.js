@@ -1,17 +1,35 @@
-const DeployButton = ({ type }) => {
+import { deploy, redeploy } from "../services/api.js";
+
+const DeployButton = ({ type, onLocalChanges, onDeploy, onRedeploy }) => {
+  const handleDeploy = () => {
+    if (window.confirm("Are you sure you want to deploy?")) {
+      deploy();
+      onLocalChanges(false);
+      onDeploy();
+    }
+  };
+
+  const handleRedeploy = () => {
+    if (window.confirm("Are you sure you want to re-deploy?")) {
+      redeploy();
+      onLocalChanges(false);
+      onRedeploy();
+    }
+  };
+
   const selectButton = () => {
-    if (type === 'deploy-enabled') {
+    if (type === "deploy-enabled") {
       return (
         <button
           className="bg-indigo-600 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
           type="button"
           style={{ transition: "all .15s ease" }}
-          onClick={() => alert('Deploy')}
+          onClick={handleDeploy}
         >
           Deploy
         </button>
-      )
-    } else if (type === 'deploy-disabled') {
+      );
+    } else if (type === "deploy-disabled") {
       return (
         <button
           className="bg-blueGray-400 text-white text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
@@ -20,19 +38,19 @@ const DeployButton = ({ type }) => {
         >
           Deploy
         </button>
-      )
-    } else if (type === 'redeploy-enabled') {
+      );
+    } else if (type === "redeploy-enabled") {
       return (
         <button
           className="bg-pink-600 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
           type="button"
           style={{ transition: "all .15s ease" }}
-          onClick={() => alert('Deploy')}
+          onClick={handleRedeploy}
         >
           Redeploy
         </button>
-      )
-    } else if (type === 'redeploy-disabled') {
+      );
+    } else if (type === "redeploy-disabled") {
       return (
         <button
           className="bg-blueGray-400 text-white text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
@@ -41,42 +59,35 @@ const DeployButton = ({ type }) => {
         >
           No Local Changes
         </button>
-      )
+      );
+    } else if (type === "deploying") {
+      return (
+        <button
+          className="bg-blueGray-400 text-white text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
+          type="button"
+          disabled
+        >
+          deployment in progress...
+        </button>
+      );
+    } else if (type === "destroying") {
+      return (
+        <button
+          className="bg-blueGray-400 text-white text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
+          type="button"
+          disabled
+        >
+          tearing down infrastructure...
+        </button>
+      );
     }
-  }
+  };
 
   return (
     <div className="relative w-full pt-12 px-4 max-w-full flex-grow flex-1 text-center">
       {selectButton()}
     </div>
-  )
-}
+  );
+};
 
-export default DeployButton
-
-/*
-4 States
-
-1. If no deployments
-   - show deploy button
-2. If deployment
-   - gray out redeploy button
-3. If changes to data sources - remove, add, edit
-   - show redeploy button
-4. If loading (initial state)
-   - gray out redeploy button
-*/
-
-/*
-- figure way to track active changes
-- in env file, have a 'Local Changes' to true
-- when user makes a change to data source
-  - change 'Changes' to false
-*/
-
-// types
-//   - deploy enabled
-//     - deploy disabled
-
-//       - redeploy enabled
-//         - redeploy disabled 
+export default DeployButton;
