@@ -2,11 +2,17 @@ const { exec } = require("child_process");
 const userDirectory = process.argv[2];
 
 const deploy = () => {
-  exec("nexus deploy autoValidate", { cwd: userDirectory });
+  let child = exec("nexus deploy autoValidate", { cwd: userDirectory });
+  child.stdout.on("data", (data) => {
+    console.log(data);
+  });
 };
 
 const redeploy = () => {
-  exec("nexus redeploy autoValidate", { cwd: userDirectory });
+  let child = exec("nexus redeploy autoValidate", { cwd: userDirectory });
+  child.stdout.on("data", (data) => {
+    console.log(data);
+  });
 };
 
 const destroy = () => {

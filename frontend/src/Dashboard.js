@@ -64,9 +64,9 @@ export default function Dashboard() {
     setTimeout(() => {
       const interval = setInterval(async () => {
         const response = await getStatus();
-        if (response.status === "RUNNING") {
+        if (response === "RUNNING") {
           clearInterval(interval);
-          setStatus(response.status);
+          setStatus(response);
           setIp(await getIP());
         }
       }, 5000);
@@ -77,11 +77,12 @@ export default function Dashboard() {
     setStatus("deploying");
     setTimeout(() => {
       const interval = setInterval(async () => {
-        const response = await getStatus();
-        if (response.status === "RUNNING") {
+        const newIP = await getIP();
+        console.log(newIP, ip);
+        if (newIP !== ip) {
           clearInterval(interval);
-          setStatus(response.status);
-          setIp(await getIP());
+          setStatus(await getStatus());
+          setIp(newIP);
         }
       }, 5000);
     }, 5000);
