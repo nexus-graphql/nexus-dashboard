@@ -16,7 +16,7 @@ const IpCard = ({ ip }) => {
                 </div>
               </div>
             </div>
-            <p className="text-sm text-blueGray-400 mt-4 text-lg">
+            <p className="text-sm text-blueGray-400 mt-4 text-md">
               <span className="text-indigo-500 mr-2">
                 <i className="fas fa-chevron-right"></i> IP:
               </span>

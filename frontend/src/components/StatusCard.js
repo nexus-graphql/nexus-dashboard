@@ -16,7 +16,7 @@ const StatusCard = ({ statusObj }) => {
                 </div>
               </div>
             </div>
-            <p className="text-md text-blueGray-400 mt-4">
+            <p className="text-sm text-blueGray-400 mt-4">
               <span className={statusObj.textClass}>
                 <i className={statusObj.icon}></i>
                 {statusObj.text[0]}

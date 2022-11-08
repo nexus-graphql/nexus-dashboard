@@ -17,7 +17,7 @@ const AuthKeyCard = ({ auth }) => {
               </div>
             </div>
             <p className="text-sm text-blueGray-400 mt-4 text-sm">
-              <span className="text-indigo-500 mr-2">Key:</span>
+              {/* <span className="text-indigo-500 mr-2">Key:</span> */}
               <span className="whitespace-nowrap">{auth.authorization}</span>
             </p>
           </div>

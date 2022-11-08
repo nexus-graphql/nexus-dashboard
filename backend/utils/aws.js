@@ -5,7 +5,6 @@ const getARN = () => {
     let buffer = execSync(
       "aws ecs list-tasks --cluster backend_cluster_example_app"
     );
-    console.log("getting ARN", `${JSON.parse(buffer.toString())}`);
     if (JSON.parse(buffer.toString()).taskArns.length > 1) {
       return JSON.parse(buffer.toString()).taskArns[1];
     } else {

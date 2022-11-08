@@ -100,13 +100,13 @@ export default function Dashboard() {
       statusObj = {
         text: ["Inactive", " Deployment Unsuccessful"],
         textClass: "text-red-500 mr-2",
-        icon: "fas fa-angry",
+        icon: "fas fa-times-circle",
       };
     } else if (status === "No deployments") {
       statusObj = {
         text: [" Inactive", status],
         textClass: "text-red-500 mr-2",
-        icon: "fas fa-angry",
+        icon: "fas fa-times-circle",
       };
     } else if (status === "deploying") {
       statusObj = {
