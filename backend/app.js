@@ -10,10 +10,16 @@ graphiqlStart();
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static("build"));
-// app.use(express.static(path.resolve(`${__dirname}/build`)));
+
 app.use("/api/aws", awsRouter);
 app.use("/api/mesh", meshRouter);
 app.use("/api/deployment", deployRouter);
+
+app.use(express.static("build"));
+// app.use(express.static(path.resolve(`${__dirname}/build`)));
+app.get("*", function (req, res) {
+  res.sendFile("index.html", { root: "build" });
+  // res.sendFile('index.html', {root: path.resolve(`${__dirname}/build`)});
+});
 
 module.exports = app;
