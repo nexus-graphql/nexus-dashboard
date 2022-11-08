@@ -136,8 +136,7 @@ export default function Dashboard() {
         <Navbar name="Deployment" />
         <div className="relative bg-white-600 md:pt-32 pb-32 pt-12">
           <div className="px-4 md:px-10 mx-auto w-full">
-            {localChanges ? <ChangeAlert /> : null}
-            {/* {status === "deploying" ? <DeploymentAlert /> : null} */}
+            {localChanges && status === "RUNNING" ? <ChangeAlert /> : null}
             <div>
               <div className="flex justify-center flex-wrap">
                 <StatusCard statusObj={statusObj} />
