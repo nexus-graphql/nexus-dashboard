@@ -8,6 +8,8 @@ const {
   updateDataSource,
   getLocalChanges,
   setLocalChanges,
+  addTypeDef,
+  removeTypeDef,
 } = require("../utils/mesh");
 
 meshRouter.get("/auth", (_, res) => {
@@ -44,6 +46,16 @@ meshRouter.get("/localchanges", (req, res) => {
 meshRouter.post("/localchanges", (req, res) => {
   setLocalChanges(req.body.localChanges);
   res.status(200).json({ localChanges: req.body.localChanges });
+});
+
+meshRouter.post("/typedefs", (req, res) => {
+  addTypeDef(req.body);
+  res.status(201).send();
+});
+
+meshRouter.delete("/typedefs", (req, res) => {
+  removeTypeDef(req.body);
+  res.status(204).send();
 });
 
 module.exports = meshRouter;

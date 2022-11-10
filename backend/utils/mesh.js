@@ -109,6 +109,69 @@ const setLocalChanges = (bool) => {
   return bool;
 };
 
+const addTypeDef = (typeDef) => {
+  let envJSON = JSON.parse(readFileSync(envPath));
+
+  if (!envJSON.additionalTypeDefs) {
+    envJSON.additionalTypeDefs = {};
+  }
+
+  const key = `${typeDef.newField}${typeDef.extendType}`;
+  envJSON.additionalTypeDefs[key] = typeDef;
+
+  writeAdditionalTypeDefs(envJSON.additionalTypeDefs);
+
+  writeFileSync(envPath, JSON.stringify(envJSON), "utf8");
+};
+
+const removeTypeDef = ({ newField, extendType }) => {
+  let envJSON = JSON.parse(readFileSync(envPath));
+
+  const key = `${newField}${extendType}`;
+  delete envJSON.additionalTypeDefs[key];
+
+  writeAdditionalTypeDefs(envJSON.additionalTypeDefs);
+
+  writeFileSync(envPath, JSON.stringify(envJSON), "utf8");
+};
+
+const typeDefTemplate = ({
+  extendType,
+  newField,
+  newFieldType,
+  source,
+  sourceField,
+  extendTypeField,
+}) => {
+  return `extend type ${extendType} {
+    ${newField}: ${newFieldType} @resolveTo(
+      sourceName: "${source}",
+      sourceTypeName: "Query",
+      sourceFieldName: "${sourceField}",
+      keyField: "${extendTypeField}",
+      keysArg: "filter.id.in"
+    )
+}`;
+};
+
+const writeAdditionalTypeDefs = (typeDefs) => {
+  const meshrc = load(readFileSync(meshrcPath));
+
+  let typeDefsString = "";
+
+  Object.keys(typeDefs).forEach((key, index) => {
+    if (index === 0) {
+      typeDefsString += `${typeDefTemplate(typeDefs[key])}`;
+    } else {
+      typeDefsString += `\n${typeDefTemplate(typeDefs[key])}`;
+    }
+  });
+
+  meshrc.additionalTypeDefs = typeDefsString;
+
+  writeFileSync(meshrcPath, dump(meshrc), "utf8");
+};
+
 module.exports = {
   getAuthorization,
   resetAuthorization,
@@ -118,4 +181,6 @@ module.exports = {
   updateDataSource,
   getLocalChanges,
   setLocalChanges,
+  addTypeDef,
+  removeTypeDef,
 };
