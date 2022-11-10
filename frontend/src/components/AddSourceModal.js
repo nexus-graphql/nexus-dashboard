@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-const Modal = ({ onModalClose, onSaveChanges }) => {
+const AddSourceModal = ({ onModalClose, onSaveChanges }) => {
   const [type, setType] = useState("");
   const [name, setName] = useState("");
   const [connection, setConnection] = useState("");
@@ -44,13 +44,13 @@ const Modal = ({ onModalClose, onSaveChanges }) => {
                 <p className="my-4 text-slate-500 text-lg leading-relaxed">
                   What type of data source would you like to add?
                 </p>
-                <div class="mb-3 pt-0">
+                <div className="mb-3 pt-0">
                   <input
                     value={type}
                     onChange={handleType}
                     type="text"
                     placeholder="postgres, graphql, rest"
-                    class="px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+                    className="px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
                   />
                 </div>
 
@@ -58,24 +58,24 @@ const Modal = ({ onModalClose, onSaveChanges }) => {
                   Enter a name for this data source:
                 </p>
 
-                <div class="mb-3 pt-0">
+                <div className="mb-3 pt-0">
                   <input
                     value={name}
                     onChange={handleName}
                     type="text"
-                    class="px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+                    className="px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
                   />
                 </div>
 
                 <p className="my-4 text-slate-500 text-lg leading-relaxed">
                   Enter your connection details:
                 </p>
-                <div class="mb-3 pt-0">
+                <div className="mb-3 pt-0">
                   <input
                     value={connection}
                     onChange={handleConnection}
                     type="text"
-                    class="px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
+                    className="px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
                   />
                 </div>
               </div>
@@ -106,7 +106,7 @@ const Modal = ({ onModalClose, onSaveChanges }) => {
   );
 };
 
-export default Modal;
+export default AddSourceModal;
 
 /*
 What type of data source would you like to add?

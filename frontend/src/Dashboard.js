@@ -4,9 +4,9 @@ import Sidebar from "./components/Sidebar.js";
 import DataSources from "./components/DataSources.js";
 import { useState, useEffect } from "react";
 import {
-  getIP,
-  getStatus,
-  getAuth,
+  // getIP,
+  // getStatus,
+  // getAuth,
   getLocalChanges,
   updateLocalChanges,
 } from "./services/api.js";
@@ -17,25 +17,25 @@ import AuthKeyCard from "components/AuthKeyCard.js";
 import DeployButton from "components/DeployButton.js";
 import ChangeAlert from "components/ChangeAlert.js";
 
-export default function Dashboard() {
-  const [ip, setIp] = useState("");
-  const [status, setStatus] = useState("");
-  const [auth, setAuth] = useState("");
+export default function Dashboard({ ip, status, auth, onDeploy, onRedeploy }) {
+  // const [ip, setIp] = useState("");
+  // const [status, setStatus] = useState("");
+  // const [auth, setAuth] = useState("");
   const [localChanges, setLocalChanges] = useState(false);
 
   useEffect(() => {
     getLocalChanges().then((result) => {
       setLocalChanges(result);
     });
-    getAuth().then((result) => {
-      setAuth(result);
-    });
-    getIP().then((result) => {
-      setIp(result);
-    });
-    getStatus().then((result) => {
-      setStatus(result);
-    });
+    // getAuth().then((result) => {
+    //   setAuth(result);
+    // });
+    // getIP().then((result) => {
+    //   setIp(result);
+    // });
+    // getStatus().then((result) => {
+    //   setStatus(result);
+    // });
   }, []);
 
   const getButtonType = () => {
@@ -59,34 +59,34 @@ export default function Dashboard() {
     setLocalChanges(bool);
   };
 
-  const handleDeploy = () => {
-    setStatus("deploying");
-    setTimeout(() => {
-      const interval = setInterval(async () => {
-        const response = await getStatus();
-        if (response === "RUNNING") {
-          clearInterval(interval);
-          setStatus(response);
-          setIp(await getIP());
-        }
-      }, 5000);
-    }, 5000);
-  };
+  // const handleDeploy = () => {
+  //   setStatus("deploying");
+  //   setTimeout(() => {
+  //     const interval = setInterval(async () => {
+  //       const response = await getStatus();
+  //       if (response === "RUNNING") {
+  //         clearInterval(interval);
+  //         setStatus(response);
+  //         setIp(await getIP());
+  //       }
+  //     }, 5000);
+  //   }, 5000);
+  // };
 
-  const handleRedeploy = () => {
-    setStatus("deploying");
-    setTimeout(() => {
-      const interval = setInterval(async () => {
-        const newIP = await getIP();
-        console.log(newIP, ip);
-        if (newIP !== ip) {
-          clearInterval(interval);
-          setStatus(await getStatus());
-          setIp(newIP);
-        }
-      }, 5000);
-    }, 5000);
-  };
+  // const handleRedeploy = () => {
+  //   setStatus("deploying");
+  //   setTimeout(() => {
+  //     const interval = setInterval(async () => {
+  //       const newIP = await getIP();
+  //       console.log(newIP, ip);
+  //       if (newIP !== ip) {
+  //         clearInterval(interval);
+  //         setStatus(await getStatus());
+  //         setIp(newIP);
+  //       }
+  //     }, 5000);
+  //   }, 5000);
+  // };
 
   let statusObj;
   if (status) {
@@ -114,9 +114,9 @@ export default function Dashboard() {
         textClass: "text-pink-500 mr-2",
         icon: "fas fa-arrow-circle-up",
       };
-    } else if (status === "destroying") {
+    } else {
       statusObj = {
-        text: ["Destroying....", "in progress"],
+        text: ["Testing....", "in progress"],
         textClass: "text-red-500 mr-2",
         icon: "fas fa-trash-alt",
       };
@@ -136,8 +136,7 @@ export default function Dashboard() {
         <Navbar name="Deployment" />
         <div className="relative bg-white-600 md:pt-32 pb-32 pt-12">
           <div className="px-4 md:px-10 mx-auto w-full">
-            {localChanges ? <ChangeAlert /> : null}
-            {/* {status === "deploying" ? <DeploymentAlert /> : null} */}
+            {localChanges && status === "RUNNING" ? <ChangeAlert /> : null}
             <div>
               <div className="flex justify-center flex-wrap">
                 <StatusCard statusObj={statusObj} />
@@ -148,8 +147,8 @@ export default function Dashboard() {
               <DeployButton
                 type={getButtonType()}
                 onLocalChanges={handleLocalChanges}
-                onDeploy={handleDeploy}
-                onRedeploy={handleRedeploy}
+                onDeploy={onDeploy}
+                onRedeploy={onRedeploy}
               />
             </div>
           </div>
