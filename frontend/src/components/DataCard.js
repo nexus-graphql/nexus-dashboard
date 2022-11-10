@@ -31,7 +31,7 @@ const DataCard = ({
                   </div>
                 </div>
                 <div className="flex justify-center block w-full overflow-x-auto">
-                  <table className="items-center w-full bg-transparent border-collapse">
+                  <table className="items-center table-fixed w-11/12 bg-transparent border-collapse">
                     <thead>
                       <tr>
                         <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-lg uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -53,7 +53,7 @@ const DataCard = ({
                       </tr>
                     </tbody>
                   </table>
-                  <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
+                  <div className="relative w-full px-4 max-w-full text-right">
                     <button
                       onClick={handleEditSource}
                       className="bg-green-500 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
@@ -62,9 +62,6 @@ const DataCard = ({
                     >
                       Edit
                     </button>
-                    {/* </div> */}
-
-                    {/* <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right"> */}
                     <button
                       onClick={handleRemoveSource}
                       className="bg-red-500 text-white active:bg-indigo-600 text-lg font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1"
