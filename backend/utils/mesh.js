@@ -4,6 +4,8 @@ const { v4: uuidv4 } = require("uuid");
 const postgresTemplate = require("../templates/postgres.js");
 const graphqlTemplate = require("../templates/graphql.js");
 const openapiTemplate = require("../templates/openapi.js");
+const { loadSchemaSync } = require("@graphql-tools/load");
+const { GraphQLFileLoader } = require("@graphql-tools/graphql-file-loader");
 
 const { load, dump } = pkg;
 const userDirectory = process.argv[2];
@@ -172,6 +174,77 @@ const writeAdditionalTypeDefs = (typeDefs) => {
   writeFileSync(meshrcPath, dump(meshrc), "utf8");
 };
 
+const getPostgresDataSourceNames = () => {
+  const meshrc = load(readFileSync(meshrcPath));
+  let names = [];
+  meshrc.sources.forEach((dataSource) => {
+    if (dataSource.handler.postgraphile) {
+      names.push(dataSource.name);
+    }
+  });
+  return names;
+};
+
+// iterate through .mesh/sources
+// if the directory name is in list returned from` getPostgresDataSourceNames`,
+// {dataSourceName: schhemaObject}
+/*
+const schema = loadSchemaSync("../server/.mesh/schema.graphql", {
+  loaders: [new GraphQLFileLoader()],
+});
+*/
+const loadSchemas = () => {
+  const names = getPostgresDataSourceNames();
+  let schemas = {};
+  names.forEach((name) => {
+    schemas[name] = loadSchemaSync(
+      `${userDirectory}/.mesh/sources/${name}/schema.graphql`,
+      {
+        loaders: [new GraphQLFileLoader()],
+      }
+    );
+  });
+  return schemas;
+};
+
+const filterSchemas = () => {
+  let schemas = loadSchemas();
+  let result = {};
+  for (const name in schemas) {
+    let schema = schemas[name];
+    let queryFields = Object.keys(schema._queryType._fields);
+    queryFields = queryFields
+      .filter((field) => {
+        return !["query", "nodeId", "node"].includes(field);
+      })
+      .map((field) => {
+        return field.slice(0, 1).toUpperCase() + field.slice(1);
+      });
+
+    // filter schema._typeMap by whether or not the current key is included queryFields
+    let types = [];
+    for (const key in schema._typeMap) {
+      if (queryFields.includes(key)) {
+        types.push(key);
+      }
+    }
+
+    let obj = {};
+    types.forEach((type) => {
+      let fields = Object.keys(schema._typeMap[type]._fields).filter((key) => {
+        return key !== "nodeId" && !key.match(/.+By.+Id.*/);
+      });
+      obj[type] = fields;
+    });
+    result[name] = obj;
+  }
+  return result;
+};
+
+const getSchemas = () => {
+  return filterSchemas();
+};
+
 module.exports = {
   getAuthorization,
   resetAuthorization,
@@ -183,4 +256,5 @@ module.exports = {
   setLocalChanges,
   addTypeDef,
   removeTypeDef,
+  getSchemas,
 };

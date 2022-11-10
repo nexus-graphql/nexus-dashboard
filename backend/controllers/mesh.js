@@ -10,6 +10,7 @@ const {
   setLocalChanges,
   addTypeDef,
   removeTypeDef,
+  getSchemas,
 } = require("../utils/mesh");
 
 meshRouter.get("/auth", (_, res) => {
@@ -56,6 +57,10 @@ meshRouter.post("/typedefs", (req, res) => {
 meshRouter.delete("/typedefs", (req, res) => {
   removeTypeDef(req.body);
   res.status(204).send();
+});
+
+meshRouter.get("/schemas", (req, res) => {
+  res.status(200).json(getSchemas());
 });
 
 module.exports = meshRouter;
