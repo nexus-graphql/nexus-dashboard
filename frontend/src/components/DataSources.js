@@ -12,7 +12,7 @@ import {
   submitEditDataSource,
 } from "../services/api.js";
 
-export default function DataSources({ onLocalChanges }) {
+export default function DataSources({ onLocalChanges, schemaData }) {
   const [data, setData] = useState([]);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [isEditClicked, setIsEditClicked] = useState(false);
@@ -45,8 +45,7 @@ export default function DataSources({ onLocalChanges }) {
   };
 
   const handleSaveEditSource = async (dataSourceObj) => {
-    let response = await submitEditDataSource(dataSourceObj);
-    setData(response.sources);
+    await submitEditDataSource(dataSourceObj);
     onLocalChanges(true);
     handleCloseEditModal();
   };
@@ -93,6 +92,7 @@ export default function DataSources({ onLocalChanges }) {
         ) : null}
         {isEditClicked ? (
           <EditSourceModal
+            schemaData={schemaData}
             onEditSource={handleSaveEditSource}
             onEditClose={handleCloseEditModal}
             sourceObj={editSourceObj}

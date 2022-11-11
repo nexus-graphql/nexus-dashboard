@@ -17,25 +17,20 @@ import AuthKeyCard from "components/AuthKeyCard.js";
 import DeployButton from "components/DeployButton.js";
 import ChangeAlert from "components/ChangeAlert.js";
 
-export default function Dashboard({ ip, status, auth, onDeploy, onRedeploy }) {
-  // const [ip, setIp] = useState("");
-  // const [status, setStatus] = useState("");
-  // const [auth, setAuth] = useState("");
+export default function Dashboard({
+  ip,
+  status,
+  auth,
+  onDeploy,
+  onRedeploy,
+  schemaData,
+}) {
   const [localChanges, setLocalChanges] = useState(false);
 
   useEffect(() => {
     getLocalChanges().then((result) => {
       setLocalChanges(result);
     });
-    // getAuth().then((result) => {
-    //   setAuth(result);
-    // });
-    // getIP().then((result) => {
-    //   setIp(result);
-    // });
-    // getStatus().then((result) => {
-    //   setStatus(result);
-    // });
   }, []);
 
   const getButtonType = () => {
@@ -58,35 +53,6 @@ export default function Dashboard({ ip, status, auth, onDeploy, onRedeploy }) {
     await updateLocalChanges(bool);
     setLocalChanges(bool);
   };
-
-  // const handleDeploy = () => {
-  //   setStatus("deploying");
-  //   setTimeout(() => {
-  //     const interval = setInterval(async () => {
-  //       const response = await getStatus();
-  //       if (response === "RUNNING") {
-  //         clearInterval(interval);
-  //         setStatus(response);
-  //         setIp(await getIP());
-  //       }
-  //     }, 5000);
-  //   }, 5000);
-  // };
-
-  // const handleRedeploy = () => {
-  //   setStatus("deploying");
-  //   setTimeout(() => {
-  //     const interval = setInterval(async () => {
-  //       const newIP = await getIP();
-  //       console.log(newIP, ip);
-  //       if (newIP !== ip) {
-  //         clearInterval(interval);
-  //         setStatus(await getStatus());
-  //         setIp(newIP);
-  //       }
-  //     }, 5000);
-  //   }, 5000);
-  // };
 
   let statusObj;
   if (status) {
@@ -154,7 +120,10 @@ export default function Dashboard({ ip, status, auth, onDeploy, onRedeploy }) {
           </div>
         </div>
       </div>
-      <DataSources onLocalChanges={handleLocalChanges} />
+      <DataSources
+        schemaData={schemaData}
+        onLocalChanges={handleLocalChanges}
+      />
     </>
   );
 }

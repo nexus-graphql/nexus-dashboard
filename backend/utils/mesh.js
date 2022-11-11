@@ -142,16 +142,16 @@ const typeDefTemplate = ({
   newField,
   newFieldType,
   source,
-  sourceField,
+  filterField,
   extendTypeField,
 }) => {
   return `extend type ${extendType} {
     ${newField}: ${newFieldType} @resolveTo(
       sourceName: "${source}",
       sourceTypeName: "Query",
-      sourceFieldName: "${sourceField}",
+      sourceFieldName: "all${newFieldType}sList",
       keyField: "${extendTypeField}",
-      keysArg: "filter.id.in"
+      keysArg: "filter.${filterField}.in"
     )
 }`;
 };

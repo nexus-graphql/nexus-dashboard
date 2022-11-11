@@ -45,8 +45,8 @@ export const deleteDataSource = async (dataSourceObj) => {
 };
 
 export const submitEditDataSource = async (dataSourceObj) => {
-  let response = await axios.put(
-    "http://localhost:3001/api/mesh/datasources",
+  let response = await axios.post(
+    "http://localhost:3001/api/mesh/typedefs",
     dataSourceObj
   );
   return response.data;
@@ -78,4 +78,9 @@ export const redeploy = async () => {
 export const destroy = async () => {
   await axios.post("http://localhost:3001/api/deployment/destroy");
   return;
+};
+
+export const getSchemaData = async () => {
+  let response = await axios.get("http://localhost:3001/api/mesh/schemas");
+  return response.data;
 };
