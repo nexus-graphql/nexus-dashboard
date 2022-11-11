@@ -60,7 +60,7 @@ const App = () => {
           setStatus(newStatus);
           setIp(newIP);
         }
-      }, 5000);
+      }, 15000);
     }, 5000);
   };
 
