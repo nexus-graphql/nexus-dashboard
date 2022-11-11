@@ -145,31 +145,43 @@ const typeDefTemplate = ({
   filterField,
   extendTypeField,
 }) => {
-  return `extend type ${extendType} {
-    ${newField}: ${newFieldType} @resolveTo(
-      sourceName: "${source}",
-      sourceTypeName: "Query",
-      sourceFieldName: "all${newFieldType}sList",
-      keyField: "${extendTypeField}",
-      keysArg: "filter.${filterField}.in"
-    )
+  const typeDef = `extend type ${extendType} {
+  ${newField}: ${newFieldType}
 }`;
+
+  const resolver = {
+    targetTypeName: extendType,
+    targetFieldName: newField,
+    sourceName: source,
+    sourceTypeName: "Query",
+    sourceFieldName: `all${newFieldType}sList`,
+    keyField: `${extendTypeField}`,
+    keysArg: `filter.${filterField}.in`,
+  };
+
+  return { typeDef, resolver };
 };
 
 const writeAdditionalTypeDefs = (typeDefs) => {
   const meshrc = load(readFileSync(meshrcPath));
 
   let typeDefsString = "";
+  const resolvers = [];
 
   Object.keys(typeDefs).forEach((key, index) => {
+    const template = typeDefTemplate(typeDefs[key]);
+
     if (index === 0) {
-      typeDefsString += `${typeDefTemplate(typeDefs[key])}`;
+      typeDefsString += `${template.typeDef}`;
     } else {
-      typeDefsString += `\n${typeDefTemplate(typeDefs[key])}`;
+      typeDefsString += `\n${template.typeDef}`;
     }
+
+    resolvers.push(template.resolver);
   });
 
   meshrc.additionalTypeDefs = typeDefsString;
+  meshrc.additionalResolvers = resolvers;
 
   writeFileSync(meshrcPath, dump(meshrc), "utf8");
 };
@@ -240,6 +252,10 @@ const getTypeDefs = () => {
   getPostgresDataSourceNames().forEach((name) => {
     typeDefs[name] = [];
   });
+
+  if (!envJSON.additionalTypeDefs) {
+    envJSON.additionalTypeDefs = {};
+  }
 
   Object.keys(envJSON.additionalTypeDefs).forEach((key) => {
     const typeDef = envJSON.additionalTypeDefs[key];
