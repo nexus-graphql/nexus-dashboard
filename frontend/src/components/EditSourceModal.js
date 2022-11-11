@@ -6,6 +6,8 @@ const EditSourceModal = ({
   onEditSource,
   sourceObj,
   schemaData,
+  fieldConnections,
+  onDeleteFieldConnection,
 }) => {
   const [source, setSource] = useState("");
   const [newFieldType, setNewFieldType] = useState("");
@@ -14,10 +16,11 @@ const EditSourceModal = ({
   const [newField, setNewField] = useState("");
   const [filterField, setFilterField] = useState("");
 
-  const handleNewField = (event) => {
-    event.preventDefault();
-    setNewField(event.target.value);
+  const handleNewFieldType = (event) => {
+    setNewFieldType(event.target.value);
+    setNewField(event.target.value.toLowerCase());
   };
+
   const handleCloseModal = () => {
     onEditClose();
   };
@@ -30,6 +33,7 @@ const EditSourceModal = ({
       extendType,
       newField,
       filterField,
+      extendSource: sourceObj.name,
     });
   };
 
@@ -60,20 +64,71 @@ const EditSourceModal = ({
     return [];
   };
 
+  const handleDeleteFieldConnection = (id) => {
+    onDeleteFieldConnection(id);
+  };
+
+  const displayExistingConnections = () => {
+    if (
+      fieldConnections === undefined ||
+      fieldConnections === null ||
+      Object.keys(fieldConnections).length === 0 ||
+      fieldConnections.length === 0
+    ) {
+      return <p>None</p>;
+    }
+
+    return (
+      <div className="flex items-start justify-between p-5 pt-0 rounded-t">
+        <ul>
+          {fieldConnections.map((con, idx) => {
+            return (
+              <li key={idx}>
+                {sourceObj.name}.{con.extendType}.{con.extendTypeField} &nbsp;
+                <i className="fas fa-long-arrow-alt-right"></i> &nbsp;
+                {con.source}.{con.newFieldType}.{con.filterField} &nbsp;&nbsp;
+                <i
+                  value="something"
+                  onClick={(e) =>
+                    handleDeleteFieldConnection(
+                      `${con.newField}${con.extendType}`
+                    )
+                  }
+                  className="fas fa-trash-alt"
+                ></i>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    );
+  };
   return (
     <>
-      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-        <div className="relative w-auto my-6 mx-auto max-w-6xl">
-          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-            <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-              <h2 className="text-3xl font-semibold block">
+      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 pt-100 z-50 outline-none focus:outline-none">
+        <div className="relative w-auto my-6 mx-auto max-w-8xl">
+          <div
+            className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
+            style={{ paddingTop: "35px" }}
+          >
+            <div className="flex items-start justify-between p-5 rounded-t">
+              <h2 className="text-4xl font-semibold block">
                 Editing {sourceObj.name}
               </h2>
             </div>
-            <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-              <h3 className="text-2xl font-semibold">
+            <div className="flex items-start justify-between p-5 rounded-t">
+              <h3 className="text-3xl font-semibold">
                 Link Types Across Data Sources
               </h3>
+            </div>
+            <div className="flex items-start justify-between p-5 pb-0 rounded-t">
+              <h3 className="text-xl font-semibold">Existing connections</h3>
+            </div>
+            <div className="flex items-start p-5 pl-20 rounded-t">
+              {displayExistingConnections()}
+            </div>
+            <div className="flex items-start justify-between p-5 rounded-t">
+              <h3 className="text-xl font-semibold">Add new connection</h3>
             </div>
             {Object.keys(schemaData).length !== 0 ? (
               <form>
@@ -142,7 +197,7 @@ const EditSourceModal = ({
                   <div className="mb-3 pt-0">
                     <select
                       value={newFieldType}
-                      onChange={(e) => setNewFieldType(e.target.value)}
+                      onChange={handleNewFieldType}
                       className="px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
                     >
                       <option default></option>
@@ -179,14 +234,14 @@ const EditSourceModal = ({
                   <div className="mb-3 pt-0">
                     <input
                       value={newField}
-                      onChange={handleNewField}
+                      onChange={(e) => setNewField(e.target.value)}
                       type="text"
                       className="px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
                     />
                   </div>
                 </div>
 
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                <div className="flex items-center justify-end p-6 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"

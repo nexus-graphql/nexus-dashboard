@@ -3,13 +3,7 @@ import Navbar from "./components/Navbar.js";
 import Sidebar from "./components/Sidebar.js";
 import DataSources from "./components/DataSources.js";
 import { useState, useEffect } from "react";
-import {
-  // getIP,
-  // getStatus,
-  // getAuth,
-  getLocalChanges,
-  updateLocalChanges,
-} from "./services/api.js";
+import { getLocalChanges, updateLocalChanges } from "./services/api.js";
 
 import StatusCard from "./components/StatusCard.js";
 import IpCard from "./components/IpCard.js";
@@ -24,6 +18,8 @@ export default function Dashboard({
   onDeploy,
   onRedeploy,
   schemaData,
+  fieldConnections,
+  setFieldConnections,
 }) {
   const [localChanges, setLocalChanges] = useState(false);
 
@@ -123,6 +119,8 @@ export default function Dashboard({
       <DataSources
         schemaData={schemaData}
         onLocalChanges={handleLocalChanges}
+        fieldConnections={fieldConnections}
+        setFieldConnections={setFieldConnections}
       />
     </>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 const AddSourceModal = ({ onModalClose, onSaveChanges }) => {
-  const [type, setType] = useState("");
+  const [type, setType] = useState("postgres");
   const [name, setName] = useState("");
   const [connection, setConnection] = useState("");
 
@@ -45,13 +45,15 @@ const AddSourceModal = ({ onModalClose, onSaveChanges }) => {
                   What type of data source would you like to add?
                 </p>
                 <div className="mb-3 pt-0">
-                  <input
+                  <select
                     value={type}
                     onChange={handleType}
-                    type="text"
-                    placeholder="postgres, graphql, rest"
                     className="px-3 py-3 placeholder-slate-300 text-slate-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"
-                  />
+                  >
+                    {["postgres", "graphql", "rest"].map((sourceType, idx) => {
+                      return <option key={idx}>{sourceType}</option>;
+                    })}
+                  </select>
                 </div>
 
                 <p className="my-4 text-slate-500 text-lg leading-relaxed">

@@ -10,9 +10,15 @@ import {
   getData,
   submitDataSource,
   submitEditDataSource,
+  deleteFieldConnection,
 } from "../services/api.js";
 
-export default function DataSources({ onLocalChanges, schemaData }) {
+export default function DataSources({
+  onLocalChanges,
+  schemaData,
+  fieldConnections,
+  setFieldConnections,
+}) {
   const [data, setData] = useState([]);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [isEditClicked, setIsEditClicked] = useState(false);
@@ -45,9 +51,10 @@ export default function DataSources({ onLocalChanges, schemaData }) {
   };
 
   const handleSaveEditSource = async (dataSourceObj) => {
-    await submitEditDataSource(dataSourceObj);
+    const response = await submitEditDataSource(dataSourceObj);
     onLocalChanges(true);
     handleCloseEditModal();
+    setFieldConnections(response);
   };
 
   const handleRemoveSource = async (nameObj) => {
@@ -59,6 +66,12 @@ export default function DataSources({ onLocalChanges, schemaData }) {
   const handleEditSource = (sourceObj) => {
     setIsEditClicked(true);
     setEditSourceObj(sourceObj);
+  };
+
+  const handleDeleteFieldConnection = async (id) => {
+    const response = await deleteFieldConnection(id);
+    onLocalChanges(true);
+    setFieldConnections(response);
   };
 
   let connections = {
@@ -96,6 +109,8 @@ export default function DataSources({ onLocalChanges, schemaData }) {
             onEditSource={handleSaveEditSource}
             onEditClose={handleCloseEditModal}
             sourceObj={editSourceObj}
+            fieldConnections={fieldConnections[editSourceObj.name]}
+            onDeleteFieldConnection={handleDeleteFieldConnection}
           />
         ) : null}
         <AddSourceButton onAddSource={handleAddSource} />

@@ -11,6 +11,7 @@ const {
   addTypeDef,
   removeTypeDef,
   getSchemas,
+  getTypeDefs,
 } = require("../utils/mesh");
 
 meshRouter.get("/auth", (_, res) => {
@@ -49,14 +50,21 @@ meshRouter.post("/localchanges", (req, res) => {
   res.status(200).json({ localChanges: req.body.localChanges });
 });
 
+meshRouter.get("/typedefs", (req, res) => {
+  const typeDefs = getTypeDefs();
+  res.status(200).json(typeDefs);
+});
+
 meshRouter.post("/typedefs", (req, res) => {
   addTypeDef(req.body);
-  res.status(201).send();
+  const typeDefs = getTypeDefs();
+  res.status(201).json(typeDefs);
 });
 
 meshRouter.delete("/typedefs", (req, res) => {
-  removeTypeDef(req.body);
-  res.status(204).send();
+  removeTypeDef(req.body.id);
+  const typeDefs = getTypeDefs();
+  res.status(200).json(typeDefs);
 });
 
 meshRouter.get("/schemas", (req, res) => {

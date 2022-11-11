@@ -84,3 +84,15 @@ export const getSchemaData = async () => {
   let response = await axios.get("http://localhost:3001/api/mesh/schemas");
   return response.data;
 };
+
+export const getFieldConnections = async () => {
+  let response = await axios.get("http://localhost:3001/api/mesh/typedefs");
+  return response.data;
+};
+
+export const deleteFieldConnection = async (id) => {
+  let response = await axios.delete("http://localhost:3001/api/mesh/typedefs", {
+    data: { id },
+  });
+  return response.data;
+};

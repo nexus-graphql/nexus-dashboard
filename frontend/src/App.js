@@ -2,13 +2,20 @@ import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Dashboard from "./Dashboard.js";
 import Graphiql from "components/Graphiql";
-import { getIP, getStatus, getAuth, getSchemaData } from "./services/api.js";
+import {
+  getIP,
+  getStatus,
+  getAuth,
+  getSchemaData,
+  getFieldConnections,
+} from "./services/api.js";
 
 const App = () => {
   const [ip, setIp] = useState("");
   const [status, setStatus] = useState("");
   const [auth, setAuth] = useState("");
   const [schemaData, setSchemaData] = useState({});
+  const [fieldConnections, setFieldConnections] = useState({});
 
   useEffect(() => {
     getAuth().then((result) => {
@@ -22,6 +29,9 @@ const App = () => {
     });
     getSchemaData().then((result) => {
       setSchemaData(result);
+    });
+    getFieldConnections().then((result) => {
+      setFieldConnections(result);
     });
   }, []);
 
@@ -64,6 +74,8 @@ const App = () => {
           onDeploy={handleDeploy}
           onRedeploy={handleRedeploy}
           schemaData={schemaData}
+          fieldConnections={fieldConnections}
+          setFieldConnections={setFieldConnections}
         />
       </Route>
       <Route path="/graphiql">

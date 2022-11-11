@@ -6,6 +6,7 @@ const graphqlTemplate = require("../templates/graphql.js");
 const openapiTemplate = require("../templates/openapi.js");
 const { loadSchemaSync } = require("@graphql-tools/load");
 const { GraphQLFileLoader } = require("@graphql-tools/graphql-file-loader");
+const { env } = require("process");
 
 const { load, dump } = pkg;
 const userDirectory = process.argv[2];
@@ -126,11 +127,10 @@ const addTypeDef = (typeDef) => {
   writeFileSync(envPath, JSON.stringify(envJSON), "utf8");
 };
 
-const removeTypeDef = ({ newField, extendType }) => {
+const removeTypeDef = (id) => {
   let envJSON = JSON.parse(readFileSync(envPath));
 
-  const key = `${newField}${extendType}`;
-  delete envJSON.additionalTypeDefs[key];
+  delete envJSON.additionalTypeDefs[id];
 
   writeAdditionalTypeDefs(envJSON.additionalTypeDefs);
 
@@ -185,14 +185,6 @@ const getPostgresDataSourceNames = () => {
   return names;
 };
 
-// iterate through .mesh/sources
-// if the directory name is in list returned from` getPostgresDataSourceNames`,
-// {dataSourceName: schhemaObject}
-/*
-const schema = loadSchemaSync("../server/.mesh/schema.graphql", {
-  loaders: [new GraphQLFileLoader()],
-});
-*/
 const loadSchemas = () => {
   const names = getPostgresDataSourceNames();
   let schemas = {};
@@ -207,7 +199,7 @@ const loadSchemas = () => {
   return schemas;
 };
 
-const filterSchemas = () => {
+const getSchemas = () => {
   let schemas = loadSchemas();
   let result = {};
   for (const name in schemas) {
@@ -241,8 +233,20 @@ const filterSchemas = () => {
   return result;
 };
 
-const getSchemas = () => {
-  return filterSchemas();
+const getTypeDefs = () => {
+  let envJSON = JSON.parse(readFileSync(envPath));
+
+  const typeDefs = {};
+  getPostgresDataSourceNames().forEach((name) => {
+    typeDefs[name] = [];
+  });
+
+  Object.keys(envJSON.additionalTypeDefs).forEach((key) => {
+    const typeDef = envJSON.additionalTypeDefs[key];
+    typeDefs[typeDef.extendSource].push(typeDef);
+  });
+
+  return typeDefs || [];
 };
 
 module.exports = {
@@ -257,4 +261,5 @@ module.exports = {
   addTypeDef,
   removeTypeDef,
   getSchemas,
+  getTypeDefs,
 };
