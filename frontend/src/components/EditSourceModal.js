@@ -103,22 +103,21 @@ const EditSourceModal = ({
       </div>
     );
   };
+
   return (
     <>
-      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 pt-100 z-50 outline-none focus:outline-none">
+      <div
+        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 pt-100 z-50 outline-none focus:outline-none"
+        // style={{ marginRight: "600px", marginLeft: "600px" }}
+      >
         <div className="relative w-auto my-6 mx-auto max-w-8xl">
           <div
             className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
-            style={{ paddingTop: "35px" }}
+            style={{ marginTop: "150px" }}
           >
             <div className="flex items-start justify-between p-5 rounded-t">
-              <h2 className="text-4xl font-semibold block">
-                Editing {sourceObj.name}
-              </h2>
-            </div>
-            <div className="flex items-start justify-between p-5 rounded-t">
               <h3 className="text-3xl font-semibold">
-                Link Types Across Data Sources
+                Link Another Source with {sourceObj.name}
               </h3>
             </div>
             <div className="flex items-start justify-between p-5 pb-0 rounded-t">
